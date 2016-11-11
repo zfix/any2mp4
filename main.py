@@ -14,20 +14,18 @@ def newname(oldname):
 
 
 def convert(filename):
-    # print(filename)
     cmd = cmdtempl
     newfile = newname(filename)
+    # check encoder and build full cmd array
     if "ffmpeg" == cmd[0]:
         cmd[2] = filename
     else:
         cmd[-3] = filename
     cmd[-1] = newfile
-    # cmd = "{coder} -i '{src}' -codec copy -map 0:v -map 0:a -f mp4 '{dst}'"\
-        # .format(coder=ffmpeg, src=filename, dst=newfile)
-    # print(cmd)
     proc = SP.Popen(cmd, stdout=SP.PIPE, stderr=SP.PIPE)
     print('Converting "%s" to "%s"' % (filename, newfile))
     res, err = proc.communicate()
+    # check converting result
     if streamAnalyze(newfile):
         return True
     else:
@@ -62,6 +60,7 @@ def streamAnalyze(filename):
     d = json.loads(jarray)
     msg = False
     try:
+        # converted file must have least 2 streams
         array = d['streams']
         if len(array) > 1:
             msg = True
@@ -79,15 +78,19 @@ def main():
             print('Using as file list %s' % srclist)
     except KeyError:
         print('Using as inputdir %s file list %s' % (indir,srclist))
+    # Find all files for convert
     findfile(indir, srclist)
     infile = open(srclist, 'r')
     insrc = infile.readlines()
     infile.close()
+    # COnvert each founded files
     for inp in insrc:
         log_file = open(logfile, 'a')
         filename = inp.strip('\n')
+        # Check if conversion was ready
         srccheck = streamAnalyze(newname(filename))
         if srccheck:
+            # if file was converted we can delete source file
             print('%s:"%s" Was converted\n' % (str(logging.time.time()), filename))
             log_file.write('%s:"%s" Was converted\n' % (str(logging.time.ctime()), filename))
             # try:
@@ -95,9 +98,11 @@ def main():
             # except OSError:
             #     log_file.write('%s:"%s" OSError!\n' % (str(logging.time.ctime()), filename))
         else:
+            # converting file to same name with ".mp4" extension
             print('"%s" Will convert' % filename)
             res = convert(filename)
             if res:
+                # Check conversion result
                 check = streamAnalyze(newname(filename))
                 if check:
                     log_file.write('%s:"%s" Success\n' % (str(logging.time.ctime()), filename))
