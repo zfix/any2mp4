@@ -3,12 +3,12 @@ Python tool for converting from some directory any file to mp4
 <br><br>
 using (run convert in specific directory):
 <br>
-<it>
+<i>
 python main.py /path/to/files /home/user/files.txt
-</it>
+</i>
 <br><br>
 or (input dir and list of founded files placed in config.py):
 <br>
-<it>
+<i>
 python main.py
-</it>
+</i>
