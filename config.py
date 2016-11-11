@@ -10,7 +10,7 @@ cmdtempl=['HandBrakeCLI', '-Z', 'Normal', '-i', '"SRC"', '-o', '"DST"']
 #           '-ab', '128k', '-ac', '2', '-ar', '48k',
 #           '-map', '0:v', '-map', '0:a', '-f', 'mp4', '"DST"']
 cmdffp=['ffprobe', '-show_streams', '-of', 'json', '"SRC"']
-indir="/media/films/stroage1/Multfilmy"
+indir="/media/films/"
 logfile="/home/user/tr.log"
 srclist="/home/user/mkvfiles.txt"
 inext="mkv"
