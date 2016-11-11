@@ -11,8 +11,8 @@ cmdtempl=['HandBrakeCLI', '-Z', 'Normal', '-i', '"SRC"', '-o', '"DST"']
 #           '-map', '0:v', '-map', '0:a', '-f', 'mp4', '"DST"']
 cmdffp=['ffprobe', '-show_streams', '-of', 'json', '"SRC"']
 indir="/media/films/stroage1/Multfilmy"
-logfile="/home/tos/tr.log"
-srclist="/home/tos/mkvfiles.txt"
+logfile="/home/user/tr.log"
+srclist="/home/user/mkvfiles.txt"
 inext="mkv"
 regexpsearch = '(.*)\.%s' % inext
 # regexpsearch = '(.*)\.(mkv|avi|mov|ts|mpg)'
